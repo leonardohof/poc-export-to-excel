@@ -17,14 +17,17 @@ namespace PocExportToExcel.Controllers
 
         public ActionResult ExportToExcel()
         {
-            var data = new[]{
-                new{ Name="Ram", Email="ram@techbrij.com", Phone="111-222-3333" },
-                new{ Name="Shyam", Email="shyam@techbrij.com", Phone="159-222-1596" },
-                new{ Name="Mohan", Email="mohan@techbrij.com", Phone="456-222-4569" },
-                new{ Name="Sohan", Email="sohan@techbrij.com", Phone="789-456-3333" },
-                new{ Name="Karan", Email="karan@techbrij.com", Phone="111-222-1234" },
-                new{ Name="Brij", Email="brij@techbrij.com", Phone="111-222-3333" }
-            };
+            var data = new List<ContactData>();
+
+            for (int i = 0; i < 10000; i++)
+            {
+                data.Add(new ContactData("Ram", "ram@techbrij.com", "111-222-3333"));
+                data.Add(new ContactData("Shyam", "shyam@techbrij.com", "159-222-1596"));
+                data.Add(new ContactData("Mohan", "mohan@techbrij.com", "456-222-4569"));
+                data.Add(new ContactData("Sohan", "sohan@techbrij.com", "789-456-3333"));
+                data.Add(new ContactData("Karan", "karan@techbrij.com", "111-222-1234"));
+                data.Add(new ContactData("Brij", "brij@techbrij.com", "111-222-3333"));
+            }
 
             using (var excelPackage = new ExcelPackage())
             {
@@ -38,6 +41,21 @@ namespace PocExportToExcel.Controllers
                     return File(memoryStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "contacts.xlsx");
                 }
             }
+        }
+    }
+
+    public class ContactData
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+
+        public ContactData() { }
+        public ContactData(string name, string email, string phone)
+        {
+            Name = name;
+            Email = email;
+            Phone = phone;
         }
     }
 }
